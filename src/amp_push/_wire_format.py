@@ -6,7 +6,7 @@ the message shapes below are the whole of what remote_write 1.0 needs
 stable for years, and encoding them by hand avoids taking a protobuf codegen
 toolchain as a dependency of this small library. The output is verified
 byte-for-byte against messages built with the real `protobuf` runtime in
-tests/test_amp_push_wire_format.py.
+tests/test_wire_format.py.
 
     message WriteRequest {
       repeated TimeSeries timeseries = 1;
