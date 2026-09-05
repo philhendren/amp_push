@@ -4,11 +4,34 @@ version = "0.1.0"
 description = "A small, dependency-light client for pushing metrics to AWS Managed Prometheus (AMP) via SigV4-signed Prometheus remote_write."
 readme = "README.md"
 requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    { name = "Phil Hendren", email = "phil@phonl.io" },
+]
+maintainers = [
+    { name = "Phil Hendren", email = "phil@phonl.io" },
+]
+keywords = ["prometheus", "aws", "amp", "metrics", "remote-write", "observability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Monitoring",
+    "Typing :: Typed",
+]
 dependencies = [
     "boto3",
     "cramjam",
     "requests",
 ]
+
+[project.urls]
+Homepage = "https://github.com/philhendren/amp_push"
+Repository = "https://github.com/philhendren/amp_push"
+Issues = "https://github.com/philhendren/amp_push/issues"
 
 [project.optional-dependencies]
 dev = [

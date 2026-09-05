@@ -217,3 +217,7 @@ $ uv run pytest
 # With coverage
 $ uv run pytest --cov=amp_push
 ```
+
+## License
+
+[MIT](LICENSE) - Copyright (c) 2026 Phil Hendren.
