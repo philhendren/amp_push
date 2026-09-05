@@ -1,17 +1,8 @@
 # Installation
 
-`amp_push` is not yet published to PyPI. For now, install it directly from
-this repository:
-
 ```bash
-uv add "amp_push @ git+https://github.com/philhendren/amp_push"
+uv add amp_push
 # or
-pip install "amp_push @ git+https://github.com/philhendren/amp_push"
-```
-
-Once it's published, this will become the usual:
-
-```bash
 pip install amp_push
 ```
 
