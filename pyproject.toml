@@ -31,6 +31,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/philhendren/amp_push"
 Repository = "https://github.com/philhendren/amp_push"
+Documentation = "https://amp-push.readthedocs.io/"
 Issues = "https://github.com/philhendren/amp_push/issues"
 
 [project.optional-dependencies]

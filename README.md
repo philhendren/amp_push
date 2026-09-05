@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/philhendren/amp_push/actions/workflows/tests.yml/badge.svg)](https://github.com/philhendren/amp_push/actions/workflows/tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/amp_push)](https://pypi.org/project/amp_push/)
+[![Documentation Status](https://app.readthedocs.org/projects/amp-push/badge/?version=stable)](https://amp-push.readthedocs.io/en/stable/)
 
 A small, dependency-light client for pushing metrics to
 [AWS Managed Prometheus](https://aws.amazon.com/prometheus/) (AMP) via
@@ -10,9 +11,7 @@ SigV4-signed [Prometheus `remote_write`](https://prometheus.io/docs/specs/prw/re
 For callers that want to send a handful of metrics directly - a CI job, a
 one-off script, a Lambda - without standing up a collector or a sidecar.
 
-Full docs (installation, quickstart, API reference) live in [`docs/`](docs/)
-- see [Documentation](#documentation) below for how to build them locally
-until they're published to Read the Docs.
+Full docs (installation, quickstart, API reference): **https://amp-push.readthedocs.io/**
 
 ## Why amp_push
 
@@ -192,10 +191,10 @@ resource-level scoping to one workspace, so it's granted on `"*"`:
 ## Documentation
 
 The full docs (installation, quickstart, use cases, API reference) are
-built with [Sphinx](https://www.sphinx-doc.org/) from [`docs/`](docs/), set
-up to publish on [Read the Docs](https://readthedocs.org/) via
-[`.readthedocs.yaml`](.readthedocs.yaml). Until this repo is connected to
-an RTD project, build them locally:
+published at **https://amp-push.readthedocs.io/**, built with
+[Sphinx](https://www.sphinx-doc.org/) from [`docs/`](docs/) via
+[`.readthedocs.yaml`](.readthedocs.yaml) - rebuilt automatically on every
+push to `main`. To build them locally instead:
 
 ```bash
 $ uv sync --all-extras
