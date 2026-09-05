@@ -15,7 +15,7 @@ Or, if you only know the workspace's alias, not its id:
 
 `--workspace-id` and `--workspace-alias` are mutually exclusive - pass
 exactly one. Resolving an alias needs `aps:ListWorkspaces`, a separate IAM
-permission from `aps:RemoteWrite` - see src/amp_push/README.md.
+permission from `aps:RemoteWrite` - see README.md.
 
 This is an example of using the amp_push library, not part of the `snow`
 CLI - it imports only amp_push, click, and the standard library, so it can
@@ -25,7 +25,7 @@ any of this project's other code with it.
 Credentials are assumed to already be in place (environment variables, an
 assumed role, a shared config file, ...): this reads them through boto3's
 normal credential chain and does nothing to configure them itself. See
-src/amp_push/README.md for what IAM permission the credentials need.
+README.md for what IAM permission the credentials need.
 """
 
 from __future__ import annotations

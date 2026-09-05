@@ -113,24 +113,19 @@ resource-level scoping to one workspace, so it's granted on `"*"`:
 
 > [!NOTE]
 > `aps:ListWorkspaces` is a separate permission from `aps:RemoteWrite` and
-> isn't implied by it. If a caller only has `aps:RemoteWrite` (the case for
-> this repo's GitHub Actions role today - see [METRICS.md](../../METRICS.md)),
-> alias resolution fails with an `AccessDenied` `ClientError` from
+> isn't implied by it. If a caller only has `aps:RemoteWrite`, alias
+> resolution fails with an `AccessDenied` `ClientError` from
 > `list_workspaces` until `aps:ListWorkspaces` is granted too. Passing
 > `workspace_id` directly avoids needing this permission at all.
 
 ## Design notes
 
-- **No dependency on the rest of this repo.** `amp_push` doesn't import
-  anything from `domain`/`adapters`/`interface`, and its tests
-  (`tests/amp_push/`) don't depend on anything outside that directory
-  either - both can be lifted into a standalone package/repo as-is.
 - **Hand-rolled protobuf encoding** (`_wire_format.py`, private). The four
   message shapes `remote_write` needs have been stable for years, so
   encoding them by hand avoids taking a `protoc` codegen toolchain as a
   dependency. Verified byte-for-byte against the real `protobuf` runtime in
-  `tests/amp_push/test_wire_format.py` (a dev-only dependency - it's not
-  needed at runtime).
+  `tests/test_wire_format.py` (a dev-only dependency - it's not needed at
+  runtime).
 - **No custom exception hierarchy.** Errors surface as whatever boto3/
   botocore/`requests` already raise, plus one plain `RuntimeError` for "no
   credentials". Simple to reason about, nothing new to learn.
@@ -138,9 +133,12 @@ resource-level scoping to one workspace, so it's granted on `"*"`:
 ## Development
 
 ```bash
-# Run just this library's tests
-$ uv run pytest tests/amp_push/
+# Install dependencies (including dev/test extras)
+$ uv sync --all-extras
+
+# Run the tests
+$ uv run pytest
 
 # With coverage
-$ uv run pytest tests/amp_push/ --cov=amp_push
+$ uv run pytest --cov=amp_push
 ```

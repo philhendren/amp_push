@@ -55,7 +55,7 @@ class FakeAMPClient:
         self.pushed: list[Metric] = []
         # Real AMPClient only resolves an alias lazily, on first use - a
         # fixed stand-in is enough here since these tests aren't exercising
-        # that resolution itself (see tests/amp_push/test_client.py for that).
+        # that resolution itself (see tests/test_client.py for that).
         self.workspace_id = workspace_id or RESOLVED_WORKSPACE_ID
         FakeAMPClient.instances.append(self)
 

@@ -1,8 +1,8 @@
 """Verifies the hand-rolled wire encoder against a real protobuf runtime.
 
-tests/amp_push/fixtures/remote_write_reference_pb2.py is protoc-generated
-from the same four message shapes documented in src/amp_push/_wire_format.py,
-and used here only as a ground truth - the runtime code does not depend on
+tests/fixtures/remote_write_reference_pb2.py is protoc-generated from the
+same four message shapes documented in src/amp_push/_wire_format.py, and
+used here only as a ground truth - the runtime code does not depend on
 protobuf at all. See that module's docstring for why encoding is hand-rolled
 rather than generated.
 """
@@ -13,7 +13,7 @@ import pytest
 
 from amp_push._wire_format import encode_write_request
 from amp_push.metric import Metric
-from tests.amp_push.fixtures import remote_write_reference_pb2 as reference_pb2
+from tests.fixtures import remote_write_reference_pb2 as reference_pb2
 
 
 def reference_bytes(metrics: list[Metric]) -> bytes:
