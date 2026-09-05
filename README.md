@@ -1,6 +1,7 @@
 # amp_push
 
 [![Tests](https://github.com/philhendren/amp_push/actions/workflows/tests.yml/badge.svg)](https://github.com/philhendren/amp_push/actions/workflows/tests.yml)
+[![PyPI](https://img.shields.io/pypi/v/amp_push)](https://pypi.org/project/amp_push/)
 
 A small, dependency-light client for pushing metrics to
 [AWS Managed Prometheus](https://aws.amazon.com/prometheus/) (AMP) via
@@ -59,13 +60,10 @@ problem `amp_push` fits.)*
 
 ## Installation
 
-Not yet published to PyPI - track [the intent](#why-amp_push) but for now
-install directly from this repository:
-
 ```bash
-uv add "amp_push @ git+https://github.com/philhendren/amp_push"
+uv add amp_push
 # or
-pip install "amp_push @ git+https://github.com/philhendren/amp_push"
+pip install amp_push
 ```
 
 ## Usage
