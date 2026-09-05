@@ -1,11 +1,72 @@
 # amp_push
 
+[![Tests](https://github.com/philhendren/amp_push/actions/workflows/tests.yml/badge.svg)](https://github.com/philhendren/amp_push/actions/workflows/tests.yml)
+
 A small, dependency-light client for pushing metrics to
 [AWS Managed Prometheus](https://aws.amazon.com/prometheus/) (AMP) via
 SigV4-signed [Prometheus `remote_write`](https://prometheus.io/docs/specs/prw/remote_write_spec/).
 
 For callers that want to send a handful of metrics directly - a CI job, a
 one-off script, a Lambda - without standing up a collector or a sidecar.
+
+Full docs (installation, quickstart, API reference) live in [`docs/`](docs/)
+- see [Documentation](#documentation) below for how to build them locally
+until they're published to Read the Docs.
+
+## Why amp_push
+
+The normal way to get metrics into AMP is to run something that speaks
+`remote_write` continuously: the ADOT/OpenTelemetry Collector, a Prometheus
+server, a sidecar scraping `/metrics` off your process. That's the right
+call when you have a long-running service and want it continuously scraped.
+
+It's a lot of moving parts for the other case: something that runs briefly,
+emits a handful of data points, and exits - a Lambda invocation, a CI job, a
+cron script on a box that isn't otherwise running anything. There's no
+`/metrics` endpoint for anyone to scrape, because there's no process left to
+scrape it from by the time anyone would look. Standing up a collector to
+receive a push from one process, for a few data points, isn't proportionate
+to the job.
+
+`amp_push` is for that gap: call `client.push([...])` at the point in your
+code where something worth measuring just happened, and it's in AMP a
+network round-trip later. No local aggregation, no background thread, no
+extra thing to deploy or keep running - just one signed HTTP POST.
+
+### Example use cases
+
+*(Illustrative scenarios below - not real deployments, just the shape of
+problem `amp_push` fits.)*
+
+- **A nightly ETL Lambda.** `etl-daily` runs once a night, processes a batch
+  of records, and exits. It has no business running a metrics sidecar for
+  the two minutes it's alive - it just calls `client.push(...)` with
+  `job_duration_seconds` and `rows_processed` right before returning, so the
+  run shows up in the same Grafana dashboards as everything else.
+- **A CI test suite.** A GitHub Actions job pushes `test_suite_duration_seconds`
+  and `tests_failed_total` (labelled by branch) at the end of every run, so a
+  team can graph flakiness and runtime creep over weeks without instrumenting
+  a long-lived exporter anywhere - the runner doesn't exist after the job ends.
+- **A one-off backfill script.** An engineer runs a migration script from
+  their laptop against an assumed IAM role, and it reports
+  `rows_migrated_total` once at the end - useful signal for "did this
+  actually run to completion", without setting up anything that outlives the
+  script.
+- **An image-processing Lambda.** Each invocation resizes one uploaded image
+  and increments `images_processed_total` or `images_failed_total` before
+  returning - one metric push per invocation, no collector layer added to
+  every function in the pipeline just to get a failure count.
+
+## Installation
+
+Not yet published to PyPI - track [the intent](#why-amp_push) but for now
+install directly from this repository:
+
+```bash
+uv add "amp_push @ git+https://github.com/philhendren/amp_push"
+# or
+pip install "amp_push @ git+https://github.com/philhendren/amp_push"
+```
 
 ## Usage
 
@@ -129,6 +190,20 @@ resource-level scoping to one workspace, so it's granted on `"*"`:
 - **No custom exception hierarchy.** Errors surface as whatever boto3/
   botocore/`requests` already raise, plus one plain `RuntimeError` for "no
   credentials". Simple to reason about, nothing new to learn.
+
+## Documentation
+
+The full docs (installation, quickstart, use cases, API reference) are
+built with [Sphinx](https://www.sphinx-doc.org/) from [`docs/`](docs/), set
+up to publish on [Read the Docs](https://readthedocs.org/) via
+[`.readthedocs.yaml`](.readthedocs.yaml). Until this repo is connected to
+an RTD project, build them locally:
+
+```bash
+$ uv sync --all-extras
+$ uv run sphinx-build -b html docs docs/_build/html
+# then open docs/_build/html/index.html
+```
 
 ## Development
 

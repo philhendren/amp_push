@@ -17,6 +17,11 @@ dev = [
     "protobuf",
     "click",
 ]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "myst-parser",
+]
 
 [build-system]
 requires = ["hatchling"]
