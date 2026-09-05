@@ -7,4 +7,5 @@ __pycache__/
 .coverage
 htmlcov/
 .claude/
+docs/_build/
 
